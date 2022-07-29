@@ -30,7 +30,8 @@ result = request_time_series_and_wait_for_delivery(
     URL,
     simulation_config,
     "hisim",
-    API_KEY,
+    guid="2",
+    api_key=API_KEY,
     required_result_files={result_file_filters.HiSimFilters.ELECTRICITY_SMART_1},
 )
 

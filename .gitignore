@@ -16,11 +16,3 @@ __pycache__/
 .history/
 .mypy_cache/
 
-# linux binaries and libs
-bin/
-lib/
-lib64
-pyvenv.cfg
-
-# default output target when deployed with nohup
-nohup.out
