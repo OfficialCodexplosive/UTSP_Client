@@ -1,0 +1,26 @@
+# sqlite database of the utsp server
+requestcache.db
+
+# provider image folder
+provider/
+
+/.eggs/
+/.idea/
+/utsp.egg-info/
+__pycache__/
+
+.pytest_cache
+
+# VS Code and extension folders
+.vscode/
+.history/
+.mypy_cache/
+
+# linux binaries and libs
+bin/
+lib/
+lib64
+pyvenv.cfg
+
+# default output target when deployed with nohup
+nohup.out

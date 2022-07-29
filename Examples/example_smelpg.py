@@ -12,12 +12,12 @@ from utspclient.datastructures import ResultDelivery
 
 # load an enterprise definition for the sme-lpg
 example_folder = os.path.dirname(os.path.abspath(__file__))
-example_enterprise_path = os.path.join(example_folder, "smelpg_enterprise.json")
+example_enterprise_path = os.path.join(example_folder, "input data\\smelpg_enterprise.json")
 with open(example_enterprise_path, "r") as enterprise_file:
     enterprise_definition = enterprise_file.read()
 
 # load an additional input file
-input_file_path = os.path.join(example_folder, "smelpg_input.csv")
+input_file_path = os.path.join(example_folder, "input data\\smelpg_input.csv")
 with open(input_file_path, "rb") as input_file:
     input_file_data = input_file.read()
     # Workaround due to bug in dataclasses_json: store data as base64 encoded string

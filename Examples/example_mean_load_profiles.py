@@ -47,7 +47,7 @@ def request_all_profiles(
             "01:00:00",
             energy_intensity=EnergyIntensityType.EnergySaving,
         )
-        lpg_request_str = lpg_request.to_json()
+        lpg_request_str = lpg_request.to_json()  # type: ignore
 
         # create multiple identical request for each household with different guids
         results[hh_name] = {}
