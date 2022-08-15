@@ -5,10 +5,25 @@ and storing unneeded files
 
 
 class LPGFilters:
-    ELECTRICITY = "Results/Sum.Electricity.HH1.json"
-    HOT_WATER = "Results/Sum.Hot Water.HH1.json"
-    INNER_DEVICE_HEAT_GAINS = "Results/Sum.Innter Device Heat Gains.HH1.json"
-    ACTIVITY_LEVEL_HIGH = "Results/BodilyActivityLevel.High.HH1.json"
+    def __init__(self, resolution_in_s: int = 900) -> None:
+        self.resolution_in_s = resolution_in_s
+
+        self.ELECTRICITY = (
+            "Results/SumProfiles_{resolution_in_s}s.HH1.Electricity.json".format(
+                resolution_in_s=resolution_in_s
+            )
+        )
+        self.HOT_WATER = "Results/SumProfiles_{resolution_in_s}s.HH1.Hot Water.json".format(
+            resolution_in_s=resolution_in_s
+        )
+        self.INNER_DEVICE_HEAT_GAINS = "Results/SumProfiles_{resolution_in_s}s.HH1.Innter Device Heat Gains.json".format(
+            resolution_in_s=resolution_in_s
+        )
+        self.ACTIVITY_LEVEL_HIGH = (
+            "Results/SumProfiles_{resolution_in_s}s.HH1.High.json".format(
+                resolution_in_s=resolution_in_s
+            )
+        )
 
 
 class HiSimFilters:
@@ -16,4 +31,4 @@ class HiSimFilters:
 
 
 class PredefinedResultCollections:
-    LPG_FOR_HISIM = [LPGFilters.ELECTRICITY, LPGFilters.INNER_DEVICE_HEAT_GAINS]
+    LPG_FOR_HISIM = [LPGFilters(60).ELECTRICITY, LPGFilters(60).INNER_DEVICE_HEAT_GAINS]

@@ -13,8 +13,9 @@ from utspclient.datastructures import (
     ResultDelivery,
     TimeSeriesRequest,
 )
-from utspclient.lpgdata import HouseTypes
-from utspclient.lpgpythonbindings import EnergyIntensityType
+from utspclient.helpers.lpgdata import HouseTypes
+from utspclient.helpers.lpgpythonbindings import EnergyIntensityType
+from utspclient.helpers.lpgpythonbindings import CalcOption
 
 API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
 
@@ -46,6 +47,7 @@ def request_all_profiles(
             "2022-01-09",
             "01:00:00",
             energy_intensity=EnergyIntensityType.EnergySaving,
+            calc_options=[CalcOption.SumProfileExternalIndividualHouseholdsAsJson],
         )
         lpg_request_str = lpg_request.to_json()  # type: ignore
 
@@ -61,15 +63,16 @@ def request_all_profiles(
                 lpg_request_str,
                 "lpg",
                 guid,
-                {result_file_filters.LPGFilters.ELECTRICITY},
+                {result_file_filters.LPGFilters(3600).ELECTRICITY},
             )
             url = new_request_url if retrieve_data else status_url
             # check the status of this request
             reply = send_request(url, request, API_KEY)
             if reply.status == CalculationStatus.UNKNOWN:
                 # The request was not sent before, so it is sent now. Only when a request
-                # is sent to his url it can be added to the calculation queue
+                # is sent to this url it can be added to the calculation queue
                 reply = send_request(new_request_url, request, API_KEY)
+                assert reply.status == CalculationStatus.CALCULATIONSTARTED
                 new_requests += 1
 
             # check if the request calculation failed
@@ -113,14 +116,14 @@ def calc_and_save_mean_series(
     # take unit, start date and resolution from the first time series
     first_result = list(list(results.values())[0].values())[0]
     file_content = first_result.data[
-        result_file_filters.LPGFilters.ELECTRICITY
+        result_file_filters.LPGFilters(3600).ELECTRICITY
     ].decode()
     first_ts = json.loads(file_content)
-    start = datetime.fromisoformat(first_ts["StartTime"])
-    res_vals = [int(s) for s in first_ts["TimeResolution"].split(":")]
-    resolution = timedelta(hours=res_vals[0], minutes=res_vals[1], seconds=res_vals[2])
-    length = len(first_ts["Values"])
-    unit = first_ts["Unit"]
+    assert isinstance(first_ts, list), "Unexpected json format"
+    start = datetime(2021, 1, 4)
+    resolution = timedelta(hours=1)
+    length = len(first_ts)
+    unit = "kWh"
     # calculate the mean profiles
     means = {}
     for hh_name, results_of_one_hh in results.items():
@@ -135,9 +138,11 @@ def calc_and_save_mean_series(
 def mean_time_series(results: Iterable[ResultDelivery]):
     values = []
     for result in results:
-        file_content = result.data[result_file_filters.LPGFilters.ELECTRICITY].decode()
+        file_content = result.data[
+            result_file_filters.LPGFilters(3600).ELECTRICITY
+        ].decode()
         ts = json.loads(file_content)
-        values.append(ts["Values"])
+        values.append(ts)
     return np.mean(values, axis=0)  # type: ignore
 
 
