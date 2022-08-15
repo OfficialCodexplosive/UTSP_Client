@@ -7,7 +7,7 @@ from typing import Any, List, Optional
 
 import pandas as pd  # type: ignore
 
-import utspclient.lpgdata as lpgdata
+import utspclient.helpers.lpgdata as lpgdata
 
 
 class LPGExecutor:

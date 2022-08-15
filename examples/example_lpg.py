@@ -1,6 +1,6 @@
 """Requests a load profile that is generated using the Load Profile Generator (LPG)"""
 #%% imports
-from utspclient.lpgadapter import LPGExecutor
+from utspclient.helpers.lpgadapter import LPGExecutor
 import utspclient.client as utsp_client
 from utspclient import result_file_filters
 

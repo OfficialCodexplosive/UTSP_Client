@@ -2,10 +2,11 @@
 Helper functions for creating requests for the LPG
 """
 import inspect
-from typing import Dict
-from utspclient.lpgadapter import LPGExecutor
-from utspclient.lpgdata import Households
-from utspclient.lpgpythonbindings import (
+from typing import Dict, List
+from utspclient.helpers.lpgadapter import LPGExecutor
+from utspclient.helpers.lpgdata import Households
+from utspclient.helpers.lpgpythonbindings import (
+    CalcOption,
     HouseCreationAndCalculationJob,
     HouseholdData,
     HouseholdDataSpecificationType,
@@ -34,6 +35,7 @@ def create_lpg_request(
     external_resolution: str = None,
     geographic_location: JsonReference = None,
     energy_intensity: str = "Random",
+    calc_options: List[str] = None,
 ) -> HouseCreationAndCalculationJob:
     """
     Creates a basic LPG request from the most relevant parameters, using a default
@@ -48,6 +50,8 @@ def create_lpg_request(
     request.CalcSpec.EndDate = enddate
     request.CalcSpec.ExternalTimeResolution = external_resolution
     request.CalcSpec.GeographicLocation = geographic_location
+    if calc_options:
+        request.CalcSpec.CalcOptions = calc_options
     request.House.HouseTypeCode = housetype
     hhnamespec = HouseholdNameSpecification(householdref)
     hhn = HouseholdData(

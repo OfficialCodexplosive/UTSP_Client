@@ -1,4 +1,4 @@
-from utspclient.lpgpythonbindings import *
+from utspclient.helpers.lpgpythonbindings import *
 
 
 # noinspection PyPep8,PyUnusedLocal
