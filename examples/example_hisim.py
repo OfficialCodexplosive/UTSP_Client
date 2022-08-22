@@ -4,6 +4,7 @@ import time
 from utspclient import result_file_filters
 
 from utspclient.client import request_time_series_and_wait_for_delivery
+from utspclient.datastructures import TimeSeriesRequest
 
 # Create a simulation configuration
 simulation_config = """{
@@ -26,18 +27,16 @@ API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
 start_time = time.time()
 
 # Call time series request function
-result = request_time_series_and_wait_for_delivery(
-    URL,
+request = TimeSeriesRequest(
     simulation_config,
     "hisim",
-    guid="2",
-    api_key=API_KEY,
     required_result_files={result_file_filters.HiSimFilters.ELECTRICITY_SMART_1},
 )
+result = request_time_series_and_wait_for_delivery(URL, request, API_KEY)
 
 ts = result.data[result_file_filters.HiSimFilters.ELECTRICITY_SMART_1].decode()
 
 print("Calculation took %s seconds" % (time.time() - start_time))
 # Print all results from the request
 print("Example sme-lpg request")
-print("Retrieved data: {ts.split(os.linesep)[0]}")
+print(f"Retrieved data: {ts[:100]}")

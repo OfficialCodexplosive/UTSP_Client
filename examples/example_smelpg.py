@@ -8,11 +8,13 @@ import string
 import time
 
 from utspclient.client import request_time_series_and_wait_for_delivery
-from utspclient.datastructures import ResultDelivery
+from utspclient.datastructures import ResultDelivery, TimeSeriesRequest
 
 # load an enterprise definition for the sme-lpg
 example_folder = os.path.dirname(os.path.abspath(__file__))
-example_enterprise_path = os.path.join(example_folder, "input data\\smelpg_enterprise.json")
+example_enterprise_path = os.path.join(
+    example_folder, "input data\\smelpg_enterprise.json"
+)
 with open(example_enterprise_path, "r") as enterprise_file:
     enterprise_definition = enterprise_file.read()
 
@@ -37,13 +39,15 @@ start_time = time.time()
 guid = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
 
 # Call time series request function
-result: ResultDelivery = request_time_series_and_wait_for_delivery(
-    REQUEST_URL,
+
+request = TimeSeriesRequest(
     enterprise_definition,
     "smelpg",
     guid,
-    API_KEY,
     input_files=input_files,
+)
+result: ResultDelivery = request_time_series_and_wait_for_delivery(
+    REQUEST_URL, request, API_KEY
 )
 ts = result.data["results.csv"].decode()
 

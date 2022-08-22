@@ -74,12 +74,8 @@ def get_result(reply: RestReply) -> Optional[ResultDelivery]:
 
 def request_time_series_and_wait_for_delivery(
     url: str,
-    simulation_config: str,
-    providername: str,
-    guid: str = "",
+    request: Union[str, TimeSeriesRequest],
     api_key: str = "",
-    required_result_files: Set[str] = None,
-    input_files: Dict[str, str] = None,
 ) -> ResultDelivery:
     """
     Requests a single time series from the UTSP server from the specified time series provider
@@ -112,21 +108,15 @@ def request_time_series_and_wait_for_delivery(
     :return: The requested time series
     :rtype: TimeSeriesDelivery
     """
-    myrequest = TimeSeriesRequest(
-        simulation_config=simulation_config,
-        providername=providername,
-        guid=guid,
-        required_result_files=required_result_files or set(),
-        input_files=input_files or {},
-    )
-    request_json_str = myrequest.to_json()  # type: ignore
+    if isinstance(request, TimeSeriesRequest):
+        request = request.to_json()  # type: ignore
     status = CalculationStatus.UNKNOWN
     wait_count = 0
     while status not in [
         CalculationStatus.INDATABASE,
         CalculationStatus.CALCULATIONFAILED,
     ]:
-        reply = send_request(url, request_json_str, api_key)
+        reply = send_request(url, request, api_key)
         status = reply.status
         wait_count += 1
         if status != CalculationStatus.INDATABASE:

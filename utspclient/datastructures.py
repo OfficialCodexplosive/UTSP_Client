@@ -17,8 +17,8 @@ class CalculationStatus(Enum):
 @dataclass_json
 @dataclass
 class TimeSeriesRequest:
-    simulation_config: str = ""  # json string für die vollständige spezifikation
-    providername: str = ""  # welcher time series provider verwendet werden woll
+    simulation_config: str  # json string für die vollständige spezifikation
+    providername: str  # welcher time series provider verwendet werden woll
     guid: str = ""  # eindeutiger identifier, optional
     required_result_files: Set[str] = field(default_factory=set)
     # Additional input files to be created in the provider container. Due to a bug in
