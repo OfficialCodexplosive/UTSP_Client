@@ -5,6 +5,7 @@ requestcache.db
 provider/
 
 /.eggs/
+*.egg-info/
 /.idea/
 /utsp.egg-info/
 __pycache__/
