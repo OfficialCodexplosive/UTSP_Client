@@ -82,31 +82,12 @@ def request_time_series_and_wait_for_delivery(
 
     :param url: URL of the UTSP server
     :type url: str
-
-    :param time_series_definition: JSON string containing a definition of the requested time series
-    :type time_series_definition: str
-
-    :param providername: Name of the desired time series provider (e.g. LPG)
-    :type providername: str
-
-    :param load_type: Requested load type
-    :type load_type: str
-
-    :param guid: Self-chosen GUID for identification of the request. Choose a different GUID to
-                 receive a new time series. Defaults to ""
-    :type guid: str, optional
-
+    :param request: The request object defining the requested time series
+    :type request: Union[str, TimeSeriesRequest]
     :param api_key: API key for accessing the UTSP, defaults to ""
     :type api_key: str, optional
-
-    :param input_files: dict of names and content of additional input files, defaults to None
-    :type input_files: Dict[str, str], optional
-
-    :raises Exception: Raises an exception if the calculation failed or if the request status
-                       is unknown
-
-    :return: The requested time series
-    :rtype: TimeSeriesDelivery
+    :return: The requested result data
+    :rtype: ResultDelivery
     """
     if isinstance(request, TimeSeriesRequest):
         request = request.to_json()  # type: ignore
