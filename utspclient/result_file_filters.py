@@ -30,6 +30,15 @@ class LPGFilters:
             load_type=load_type, resolution_in_s=resolution_in_s
         )
 
+    class BodilyActivity:
+        """Result file names for bodily activity"""
+
+        _template = "Results/BodilyActivityLevel.{level}.HH1.json"
+        HIGH = _template.format(level="High")
+        LOW = _template.format(level="Low")
+        OUTSIDE = _template.format(level="Outside")
+        UNKNOWN = _template.format(level="Unknown")
+
 
 class HiSimFilters:
     ELECTRICITY_SMART_1 = "ElectricityOutput_SmartDevice1.csv"
