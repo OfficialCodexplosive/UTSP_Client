@@ -31,7 +31,6 @@ result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(LoadTypes.Electrici
 request = TimeSeriesRequest(
     simulation_config_json,
     "LPG",
-    required_result_files={result_file},
 )
 
 #%% Request the time series
