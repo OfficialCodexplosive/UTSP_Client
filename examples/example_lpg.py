@@ -4,6 +4,7 @@ from utspclient.datastructures import TimeSeriesRequest
 from utspclient.helpers.lpgadapter import LPGExecutor
 import utspclient.client as utsp_client
 from utspclient import result_file_filters
+from utspclient.helpers.lpgdata import LoadTypes
 from utspclient.helpers.lpgpythonbindings import CalcOption
 
 
@@ -13,9 +14,11 @@ assert simulation_config.CalcSpec is not None
 simulation_config.CalcSpec.EndDate = "2020-01-3"
 simulation_config.CalcSpec.StartDate = "2020-01-01"
 simulation_config.CalcSpec.ExternalTimeResolution = "00:15:00"
-simulation_config.CalcSpec.CalcOptions.append(
-    CalcOption.SumProfileExternalIndividualHouseholdsAsJson
-)
+simulation_config.CalcSpec.CalcOptions = [
+    CalcOption.SumProfileExternalIndividualHouseholdsAsJson,
+    CalcOption.BodilyActivityStatistics,
+    CalcOption.JsonHouseholdSumFiles,
+]
 
 simulation_config_json = simulation_config.to_json(indent=4)  # type: ignore
 
@@ -24,10 +27,11 @@ REQUEST_URL = "http://localhost:443/api/v1/profilerequest"
 API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
 
 #%% Prepare the time series request
+result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(LoadTypes.Electricity, 900)
 request = TimeSeriesRequest(
     simulation_config_json,
     "LPG",
-    required_result_files={result_file_filters.LPGFilters(900).ELECTRICITY},
+    required_result_files={result_file},
 )
 
 #%% Request the time series
@@ -36,5 +40,5 @@ result = utsp_client.request_time_series_and_wait_for_delivery(
 )
 
 #%% Decode result data
-file_content = result.data[result_file_filters.LPGFilters(900).ELECTRICITY].decode()
+file_content = result.data[result_file].decode()
 print(file_content)

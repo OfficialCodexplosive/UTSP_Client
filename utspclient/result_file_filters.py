@@ -5,30 +5,31 @@ and storing unneeded files
 
 
 class LPGFilters:
-    def __init__(self, resolution_in_s: int = 900) -> None:
-        self.resolution_in_s = resolution_in_s
+    """
+    Provides result file names for the LPG
+    """
 
-        self.ELECTRICITY = (
-            "Results/SumProfiles_{resolution_in_s}s.HH1.Electricity.json".format(
-                resolution_in_s=resolution_in_s
-            )
-        )
-        self.HOT_WATER = "Results/SumProfiles_{resolution_in_s}s.HH1.Hot Water.json".format(
-            resolution_in_s=resolution_in_s
-        )
-        self.INNER_DEVICE_HEAT_GAINS = "Results/SumProfiles_{resolution_in_s}s.HH1.Innter Device Heat Gains.json".format(
-            resolution_in_s=resolution_in_s
-        )
-        self.ACTIVITY_LEVEL_HIGH = (
-            "Results/SumProfiles_{resolution_in_s}s.HH1.High.json".format(
-                resolution_in_s=resolution_in_s
-            )
+    @staticmethod
+    def sum_hh1(load_type: str) -> str:
+        """Returns the file name of the sum load profile for the first simulated household, for the
+        specified load type"""
+        return "Results/Sum.{load_type}.HH1.json".format(load_type=load_type)
+
+    @staticmethod
+    def sum_hh1_ext_res(load_type: str, resolution_in_s: int) -> str:
+        """Returns the file name of the sum load profile for the first simulated household, for the
+        specified load type, in the external resolution. The resolution specified here must match the
+        external resolution specified in the LPG request.
+        If the resolution is 60 s, the internal resolution file name is returned"""
+        if resolution_in_s == 60:
+            # special case: external resolution is the same as the internal resolution of the LPG, so
+            # the LPG does not generate extra files --> choose the corresponding file with internal
+            # resolution instead
+            return LPGFilters.sum_hh1(load_type)
+        return "Results/SumProfiles_{resolution_in_s}s.HH1.{load_type}.json".format(
+            load_type=load_type, resolution_in_s=resolution_in_s
         )
 
 
 class HiSimFilters:
     ELECTRICITY_SMART_1 = "ElectricityOutput_SmartDevice1.csv"
-
-
-class PredefinedResultCollections:
-    LPG_FOR_HISIM = [LPGFilters(60).ELECTRICITY, LPGFilters(60).INNER_DEVICE_HEAT_GAINS]
