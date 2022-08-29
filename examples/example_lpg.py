@@ -15,15 +15,13 @@ simulation_config.CalcSpec.EndDate = "2020-01-3"
 simulation_config.CalcSpec.StartDate = "2020-01-01"
 simulation_config.CalcSpec.ExternalTimeResolution = "00:15:00"
 simulation_config.CalcSpec.CalcOptions = [
-    CalcOption.SumProfileExternalIndividualHouseholdsAsJson,
-    CalcOption.BodilyActivityStatistics,
-    CalcOption.JsonHouseholdSumFiles,
+    CalcOption.SumProfileExternalIndividualHouseholdsAsJson
 ]
 
 simulation_config_json = simulation_config.to_json(indent=4)  # type: ignore
 
 #%% Define connection parameters
-REQUEST_URL = "http://localhost:443/api/v1/profilerequest"
+REQUEST_URL = "http://134.94.131.167:443/api/v1/profilerequest"
 API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
 
 #%% Prepare the time series request
@@ -31,6 +29,7 @@ result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(LoadTypes.Electrici
 request = TimeSeriesRequest(
     simulation_config_json,
     "LPG",
+    required_result_files=result_file,
 )
 
 #%% Request the time series
