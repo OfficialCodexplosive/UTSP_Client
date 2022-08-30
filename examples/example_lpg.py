@@ -1,22 +1,22 @@
 """Requests a load profile that is generated using the Load Profile Generator (LPG)"""
 #%% imports
 from utspclient.datastructures import TimeSeriesRequest
-from utspclient.helpers.lpgadapter import LPGExecutor
+from utspclient.helpers import lpg_helper
 import utspclient.client as utsp_client
 from utspclient import result_file_filters
-from utspclient.helpers.lpgdata import LoadTypes
+from utspclient.helpers.lpgdata import LoadTypes, Households, HouseTypes
 from utspclient.helpers.lpgpythonbindings import CalcOption
 
 
 #%% Create a simulation configuration for the LPG
-simulation_config = LPGExecutor.make_default_lpg_settings(2020, 1, 2)
-assert simulation_config.CalcSpec is not None
-simulation_config.CalcSpec.EndDate = "2020-01-3"
-simulation_config.CalcSpec.StartDate = "2020-01-01"
-simulation_config.CalcSpec.ExternalTimeResolution = "00:15:00"
-simulation_config.CalcSpec.CalcOptions = [
-    CalcOption.SumProfileExternalIndividualHouseholdsAsJson
-]
+simulation_config = lpg_helper.create_basic_lpg_config(
+    Households.CHR01_Couple_both_at_Work,
+    HouseTypes.HT06_Normal_house_with_15_000_kWh_Heating_Continuous_Flow_Gas_Heating,
+    "2020-01-01",
+    "2020-01-03",
+    "00:15:00",
+    calc_options=[CalcOption.SumProfileExternalIndividualHouseholdsAsJson],
+)
 
 simulation_config_json = simulation_config.to_json(indent=4)  # type: ignore
 

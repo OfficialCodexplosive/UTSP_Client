@@ -39,7 +39,7 @@ def request_all_profiles(
         hh_id = get_hh_id(hh_name)
 
         # create the request for this household
-        lpg_request = lpg_helper.create_lpg_request(
+        lpg_request = lpg_helper.create_basic_lpg_config(
             2021,
             hh_ref,
             HouseTypes.HT06_Normal_house_with_15_000_kWh_Heating_Continuous_Flow_Gas_Heating,
