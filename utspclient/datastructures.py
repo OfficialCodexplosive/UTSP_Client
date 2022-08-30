@@ -17,14 +17,24 @@ class CalculationStatus(Enum):
 @dataclass_json
 @dataclass
 class TimeSeriesRequest:
-    simulation_config: str  # json string für die vollständige spezifikation
-    providername: str  # welcher time series provider verwendet werden woll
-    guid: str = ""  # eindeutiger identifier, optional
+    simulation_config: str  # provider-specific string defining the requested data
+    providername: str  # the provider which shall process the request
+    guid: str = ""  # optional unique identifier, can be used to force recalculation of otherwhise identical requests
     required_result_files: Set[str] = field(default_factory=set)
     # Additional input files to be created in the provider container. Due to a bug in
     # dataclasses_json the 'bytes' type cannot be used here, so the file contents are
     # stored base64-encoded.
     input_files: Dict[str, str] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not isinstance(self.required_result_files, set):
+            raise RuntimeError(
+                "Invalid TimeSeriesRequest: the required_result_files attribute must be a set"
+            )
+        if not isinstance(self.input_files, dict):
+            raise RuntimeError(
+                "Invalid TimeSeriesRequest: the input_files attribute must be a dict"
+            )
 
     def get_hash(self) -> str:
         # hash the json representation of the object
