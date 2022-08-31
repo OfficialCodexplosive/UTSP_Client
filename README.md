@@ -1,26 +1,17 @@
 # Universal Time Series Provider Client
 
-This is a client library that helps in sending requests to the Universal Time Series Provider, a REST service providing a uniform interface for different time series providers.
+This is a client library for accessing the universal time series provider (UTSP) server that works as a distributed job manager for time series generation tools.
 Look into the examples folder for several usage examples.
-
-# Basic idea
- 
- - specify what load profile you need
- - send the request as json via REST to the utsp
- - it looks into the database if it already has a profile for your request
- - if there is already a profile, it will deliver the profile
- - if there is no profile it will generate one and save it to the database
- - then it will deliver the profile via REST
  
 # Notes
 
-- Every request contains a guid string. This can be whatever you want. This guid is part of the database lookup and can be used to enforce recalculation of an otherwhise identical request. This might be interesting if the respective provider has probabilistic components. So if you want a fresh profile every time, ask the utsp with a different guid every time.
+- Every request contains a guid string. This can be whatever you want. This guid is part of a caching mechanism and can be used to enforce recalculation of an otherwhise identical request. This might be interesting if the respective provider has probabilistic components. So if you want a fresh profile every time, set a different guid every time.
 
 # License
 
 MIT License
 
-Copyright (C) 2022 Noah Pflugradt (FZJ IEK-3), David Neuroth (FZJ IEK-3) Leander Kotzur (FZJ IEK-3), Detlef Stolten (FZJ IEK-3)
+Copyright (C) 2022 David Neuroth (FZJ IEK-3), Noah Pflugradt (FZJ IEK-3), Leander Kotzur (FZJ IEK-3), Detlef Stolten (FZJ IEK-3)
 
 You should have received a copy of the MIT License along with this program.
 If not, see https://opensource.org/licenses/MIT
