@@ -30,7 +30,7 @@ input_files = {"input_data.csv": input_file_str}
 
 REQUEST_URL = "http://localhost:443/api/v1/profilerequest"
 
-API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
+API_KEY = ""
 
 # Save start time for run time calculation
 start_time = time.time()

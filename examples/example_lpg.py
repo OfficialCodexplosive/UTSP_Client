@@ -22,7 +22,7 @@ simulation_config_json = simulation_config.to_json(indent=4)  # type: ignore
 
 #%% Define connection parameters
 REQUEST_URL = "http://localhost:443/api/v1/profilerequest"
-API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
+API_KEY = ""
 
 #%% Prepare the time series request
 result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(LoadTypes.Electricity, 900)

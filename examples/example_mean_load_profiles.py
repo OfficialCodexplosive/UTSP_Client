@@ -17,7 +17,7 @@ from utspclient.helpers.lpgdata import HouseTypes
 from utspclient.helpers.lpgpythonbindings import EnergyIntensityType
 from utspclient.helpers.lpgpythonbindings import CalcOption
 
-API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
+API_KEY = ""
 
 
 def get_hh_id(hh_name: str) -> str:
