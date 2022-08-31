@@ -20,7 +20,7 @@ Look into the examples folder for several usage examples.
 
 MIT License
 
-Copyright (C) 2020 Noah Pflugradt (FZJ IEK-3), David Neuroth (FZJ IEK-3) Leander Kotzur (FZJ IEK-3), Detlef Stolten (FZJ IEK-3)
+Copyright (C) 2022 Noah Pflugradt (FZJ IEK-3), David Neuroth (FZJ IEK-3) Leander Kotzur (FZJ IEK-3), Detlef Stolten (FZJ IEK-3)
 
 You should have received a copy of the MIT License along with this program.
 If not, see https://opensource.org/licenses/MIT
