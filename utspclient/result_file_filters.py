@@ -41,4 +41,4 @@ class LPGFilters:
 
 
 class HiSimFilters:
-    ELECTRICITY_SMART_1 = "ElectricityOutput_SmartDevice1.csv"
+    RESIDENCE_BUILDING = "Residence_Building.csv"
