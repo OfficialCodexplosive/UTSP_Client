@@ -1,7 +1,7 @@
 import hashlib
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Union
 
 from dataclasses_json import dataclass_json  # type: ignore
 
@@ -20,16 +20,21 @@ class TimeSeriesRequest:
     simulation_config: str  # provider-specific string defining the requested data
     providername: str  # the provider which shall process the request
     guid: str = ""  # optional unique identifier, can be used to force recalculation of otherwhise identical requests
-    required_result_files: Set[str] = field(default_factory=set)
+    # Result files created by the provider that are sent back as result. Throws an error if one of these files is not
+    # created. If left empty returns all created files. Only uses the keys of the dict (uses no set to keep ordering,
+    # which is important for hashing).
+    required_result_files: Union[Dict[str, Any], Set[str]] = field(default_factory=dict)  # type: ignore
     # Additional input files to be created in the provider container. Due to a bug in
     # dataclasses_json the 'bytes' type cannot be used here, so the file contents are
     # stored base64-encoded.
     input_files: Dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self):
-        if not isinstance(self.required_result_files, set):
+        if isinstance(self.required_result_files, set):
+            self.required_result_files = dict.fromkeys(self.required_result_files)
+        if not isinstance(self.required_result_files, dict):
             raise RuntimeError(
-                "Invalid TimeSeriesRequest: the required_result_files attribute must be a set"
+                "Invalid TimeSeriesRequest: the required_result_files attribute must be a dict"
             )
         if not isinstance(self.input_files, dict):
             raise RuntimeError(
