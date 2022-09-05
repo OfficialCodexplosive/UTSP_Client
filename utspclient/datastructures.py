@@ -23,15 +23,13 @@ class TimeSeriesRequest:
     # Result files created by the provider that are sent back as result. Throws an error if one of these files is not
     # created. If left empty returns all created files. Only uses the keys of the dict (uses no set to keep ordering,
     # which is important for hashing).
-    required_result_files: Union[Dict[str, Any], Set[str]] = field(default_factory=dict)  # type: ignore
+    required_result_files: Dict[str, Any] = field(default_factory=dict)  # type: ignore
     # Additional input files to be created in the provider container. Due to a bug in
     # dataclasses_json the 'bytes' type cannot be used here, so the file contents are
     # stored base64-encoded.
     input_files: Dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self):
-        if isinstance(self.required_result_files, set):
-            self.required_result_files = dict.fromkeys(self.required_result_files)
         if not isinstance(self.required_result_files, dict):
             raise RuntimeError(
                 "Invalid TimeSeriesRequest: the required_result_files attribute must be a dict"

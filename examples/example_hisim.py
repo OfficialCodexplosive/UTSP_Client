@@ -42,7 +42,9 @@ start_time = time.time()
 request = TimeSeriesRequest(
     simulation_config,
     "hisim",
-    required_result_files={result_file_filters.HiSimFilters.RESIDENCE_BUILDING},
+    required_result_files=dict.fromkeys(
+        [result_file_filters.HiSimFilters.RESIDENCE_BUILDING]
+    ),
 )
 result = request_time_series_and_wait_for_delivery(URL, request, API_KEY)
 
