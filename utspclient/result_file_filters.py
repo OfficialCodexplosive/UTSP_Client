@@ -10,13 +10,19 @@ class LPGFilters:
     """
 
     @staticmethod
-    def sum_hh1(load_type: str, json: bool = False) -> str:
+    def sum_hh1(load_type: str, json: bool = False, no_flex: bool = False) -> str:
         """Returns the file name of the sum load profile for the first simulated household, for the
         specified load type"""
         if json:
-            return "Results/Sum.{load_type}.HH1.json".format(load_type=load_type)
+            flex = ".NoFlexDevices" if no_flex else ""
+            return "Results/Sum{flex}.{load_type}.HH1.json".format(
+                load_type=load_type, flex=flex
+            )
         else:
-            return "Results/SumProfiles.HH1.{load_type}.csv".format(load_type=load_type)
+            flex = ".NoFlex" if no_flex else ""
+            return "Results/SumProfiles{flex}.HH1.{load_type}.csv".format(
+                load_type=load_type, flex=flex
+            )
 
     @staticmethod
     def sum_hh1_ext_res(
