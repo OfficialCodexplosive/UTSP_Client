@@ -96,10 +96,13 @@ def create_basic_lpg_config(
     external_resolution: str = None,
     geographic_location: JsonReference = None,
     energy_intensity: str = lpgdata.EnergyIntensityType.Random,
+    transportation_device_set: JsonReference = None,
+    travel_route_set: JsonReference = None,
+    charging_station_set: JsonReference = None,
     calc_options: List[str] = None,
 ) -> HouseCreationAndCalculationJob:
     """
-    Creates a basic LPG request from the most relevant parameters, using a default
+    Creates a basic LPG request for a single household from the most relevant parameters, using a default
     configuration for everything else.
     """
     config = HouseCreationAndCalculationJob()
@@ -132,6 +135,9 @@ def create_basic_lpg_config(
         "hhid",
         "hhname",
         HouseholdDataSpecification=HouseholdDataSpecificationType.ByHouseholdName,
+        TransportationDeviceSet=transportation_device_set,
+        TravelRouteSet=travel_route_set,
+        ChargingStationSet=charging_station_set,
     )
     config.House.Households.append(hhn)
     return config
