@@ -14,6 +14,14 @@ class CalculationStatus(Enum):
     CALCULATIONFAILED = 4
 
 
+class ResultFileRequirement(Enum):
+    """Determines whether specified result files are required or optional. Only
+    when a required file is not created by the provider an error is raised."""
+
+    REQUIRED = 0
+    OPTIONAL = 1
+
+
 @dataclass_json
 @dataclass
 class TimeSeriesRequest:
@@ -21,9 +29,8 @@ class TimeSeriesRequest:
     providername: str  # the provider which shall process the request
     guid: str = ""  # optional unique identifier, can be used to force recalculation of otherwhise identical requests
     # Result files created by the provider that are sent back as result. Throws an error if one of these files is not
-    # created. If left empty returns all created files. Only uses the keys of the dict (uses no set to keep ordering,
-    # which is important for hashing).
-    required_result_files: Dict[str, Any] = field(default_factory=dict)  # type: ignore
+    # created. If left empty returns all created files.
+    required_result_files: Dict[str, Optional[ResultFileRequirement]] = field(default_factory=dict)  # type: ignore
     # Additional input files to be created in the provider container. Due to a bug in
     # dataclasses_json the 'bytes' type cannot be used here, so the file contents are
     # stored base64-encoded.
