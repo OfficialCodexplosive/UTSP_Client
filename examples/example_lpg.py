@@ -25,7 +25,9 @@ REQUEST_URL = "http://localhost:443/api/v1/profilerequest"
 API_KEY = ""
 
 #%% Prepare the time series request
-result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(LoadTypes.Electricity, 900)
+result_file = result_file_filters.LPGFilters.sum_hh1_ext_res(
+    LoadTypes.Electricity, 900, json=True
+)
 request = TimeSeriesRequest(
     simulation_config_json,
     "LPG",
