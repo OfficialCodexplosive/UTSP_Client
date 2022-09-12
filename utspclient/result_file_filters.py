@@ -88,6 +88,8 @@ class LPGFilters:
         OUTSIDE = _template.format(level="Outside")
         UNKNOWN = _template.format(level="Unknown")
 
+    FLEXIBILITY_EVENTS = "Reports/FlexibilityEvents.HH1.json"
+
 
 class HiSimFilters:
     RESIDENCE_BUILDING = "Residence_Building.csv"
