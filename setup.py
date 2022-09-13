@@ -20,6 +20,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=required_packages,
     setup_requires=["setuptools-git"],
+    license="MIT license",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: End Users/Desktop",
