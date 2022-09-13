@@ -22,7 +22,7 @@ setuptools.setup(
     setup_requires=["setuptools-git"],
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "Intended Audience :: End Users/Server",
+        "Intended Audience :: End Users/Desktop",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
@@ -33,5 +33,5 @@ setuptools.setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords=["buildings", "thermal load", "electricity load"],
+    keywords=["time series", "load profile", "thermal load", "electricity load"],
 )
