@@ -8,7 +8,7 @@ with open(os.path.join(dir_path, "README.md"), "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="UTSP client",
+    name="utspclient",
     version="0.1.0",
     author="David Neuroth",
     author_email="d.neuroth@fz-juelich.de",
