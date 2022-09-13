@@ -5,6 +5,7 @@ from typing import Dict, Iterable, Tuple
 
 import numpy as np
 import pandas as pd
+from utspclient import datastructures
 from utspclient.helpers import lpg_helper
 from utspclient import result_file_filters
 from utspclient.client import get_result, send_request
@@ -62,7 +63,11 @@ def request_all_profiles(
                 lpg_request_str,
                 "lpg",
                 guid,
-                {result_file_filters.LPGFilters.sum_hh1_ext_res("Electricity", 3600)},
+                {
+                    result_file_filters.LPGFilters.sum_hh1_ext_res(
+                        "Electricity", 3600
+                    ): datastructures.ResultFileRequirement.REQUIRED
+                },
             )
             url = new_request_url if retrieve_data else status_url
             # check the status of this request
