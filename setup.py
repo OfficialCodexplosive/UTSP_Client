@@ -15,7 +15,7 @@ setuptools.setup(
     description="Universal Time Series Provider Client",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    # url="https://github.com/FZJ-IEK3-VSA/utsp-client",
+    url="https://github.com/FZJ-IEK3-VSA/UTSP_Client",
     include_package_data=True,
     packages=setuptools.find_packages(),
     install_requires=required_packages,
