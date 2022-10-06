@@ -9,7 +9,7 @@ with open(os.path.join(dir_path, "README.md"), "r") as fh:
 
 setuptools.setup(
     name="utspclient",
-    version="0.1.1",
+    version="0.1.2",
     author="David Neuroth",
     author_email="d.neuroth@fz-juelich.de",
     description="Universal Time Series Provider Client",
@@ -18,6 +18,7 @@ setuptools.setup(
     url="https://github.com/FZJ-IEK3-VSA/UTSP_Client",
     include_package_data=True,
     packages=setuptools.find_packages(),
+    package_data={"utspclient": ["py.typed"]},
     install_requires=required_packages,
     setup_requires=["setuptools-git"],
     license="MIT license",
