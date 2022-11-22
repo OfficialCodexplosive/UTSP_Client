@@ -67,6 +67,19 @@ class LPGFilters:
         }
 
     @staticmethod
+    def car_location(car: str) -> str:
+        """Result file names for car locations"""
+        return f"Results/CarLocation.{car}.HH1.json"
+
+    @staticmethod
+    def all_car_locations_optional() -> Dict[str, ResultFileRequirement]:
+        """Helper function to get any created car location file."""
+        return {
+            LPGFilters.car_location(c): ResultFileRequirement.OPTIONAL
+            for c in LPGFilters.Cars.ALL
+        }
+
+    @staticmethod
     def driving_distance(car: str) -> str:
         """Result file names for driving distances"""
         return f"Results/DrivingDistance.{car}.HH1.json"
