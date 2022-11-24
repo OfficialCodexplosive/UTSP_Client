@@ -1,3 +1,6 @@
+ [![PyPI Version](https://img.shields.io/pypi/v/utspclient.svg)](https://pypi.python.org/pypi/utspclient)
+ [![PyPI - License](https://img.shields.io/pypi/l/utspclient)](LICENSE)
+
 # Universal Time Series Provider Client
 
 This is a client library for accessing the universal time series provider (UTSP) server that works as a distributed job manager for time series generation tools.
@@ -5,7 +8,7 @@ Look into the examples folder for several usage examples.
  
 # Notes
 
-- Every request contains a guid string. This can be whatever you want. This guid is part of a caching mechanism and can be used to enforce recalculation of an otherwhise identical request. This might be interesting if the respective provider has probabilistic components. So if you want a fresh profile every time, set a different guid every time.
+Every request contains a guid string. This can be whatever you want. This guid is part of a caching mechanism and can be used to enforce recalculation of an otherwhise identical request. This might be interesting if the respective provider has probabilistic components. So if you want a fresh profile every time, set a different guid every time.
 
 # License
 
