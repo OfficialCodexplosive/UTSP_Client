@@ -1,6 +1,7 @@
 """Sends multiple requests to HiSim and collects all results."""
 
 import os
+import json
 from typing import List
 
 from utspclient.client import request_time_series_and_wait_for_delivery, send_request
@@ -11,14 +12,16 @@ example_folder = os.path.dirname(os.path.abspath(__file__))
 system_config_path = os.path.join(example_folder, "input data\\hisim_config.json")
 with open(system_config_path, "r") as config_file:
     example_system_config = config_file.read()
+config_list = json.loads(example_system_config)
+string_list = [json.dumps(x) for x in config_list]
 
 # Define URL to time Series request
 URL = "http://134.94.131.167:443/api/v1/profilerequest"
-API_KEY = ""
+API_KEY = "OrjpZY93BcNWw8lKaMp0BEchbCc"
 
 
 # Define all hisim system configurations here (in this case 10 identical configs)
-all_hisim_configs = [example_system_config] * 10
+all_hisim_configs = string_list
 
 # Create all request objects
 all_requests = [
